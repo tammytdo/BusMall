@@ -1,3 +1,17 @@
+body {
+  background-color: bisque;
+  color: black;
+}
+
+
 img {
   width: 200px;
+  border: 2px solid yellow;
 }
+
+nav li{
+  float: right;
+  margin:8px;
+  list-style-type: none;
+}
+

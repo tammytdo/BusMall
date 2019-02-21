@@ -6,75 +6,123 @@ var busmall_products = [];
 // Global variable indicating number of clicks
 var number_of_clicks = 25;
 
-// Global variable to track their container
-var product_container = document.body;
+var product_container = document.getElementById('product_container');
 
-// Link all images from index.html by using getElementById
-var imagebag = document.getElementById('imagebag');
-var imagebanna = document.getElementById('imagebanna');
-var imagebathroom = document.getElementById('imagebathroom');
-var imageboots = document.getElementById('imageboots');
-var imagebreakfast = document.getElementById('imagebreakfast');
+// Linking three image elements and three h2 elements from index.html 
+var image1 = document.getElementById('image1');
+var h2_left = document.getElementById('h2_left');
 
-var imagebubblegum = document.getElementById('imagebubblegum');
-var imagechair = document.getElementById('imagechair');
-var imagecthulhu = document.getElementById('imagecthulhu');
-var imagedogduck = document.getElementById('imagedogduck');
-var imagedragon = document.getElementById('imagedragon');
+var image2 = document.getElementById('image2');
+var h2_middle = document.getElementById('h2_middle');
 
-var imagepen = document.getElementById('imagepen');
-var imagepetsweep = document.getElementById('imagepetsweep');
-var imagescissors = document.getElementById('imagescissors');
-var imageshark = document.getElementById('imageshark');
-var imagesweep = document.getElementById('imagesweep');
+var image3 = document.getElementById('image3');
+var h2_right = document.getElementById('h2_right');
 
-var imagetuantuan = document.getElementById('imagetuantuan');
-var imageunicorn = document.getElementById('imageunicorn');
-var imageusb = document.getElementById('imageusb');
-var imagewatercan = document.getElementById('imagewatercan');
-var imagewineglass = document.getElementById('imagewineglass');
+
+var image_displayed1 = null;
+var image_displayed2 = null;
+var image_displayed3 = null;
+
 
 // Constructor Function
 var Product = function(name, url) {
   this.name = name;
   this.url = url;
-  this.clicks = 0; 
+  this.clicks = 0;
   this.appeared = 0;
 
   // Tell each instantiation to live inside of the product container array after they are constructed. In addition, it will get the render_as_img prototype. 
   busmall_products.push(this);
-
-}; 
+};
 
 // Prototype with target location to reach into
-Product.prototype.render_as_img = function(target_img) {
+Product.prototype.render_as_img = function(target_img){
   target_img.src = this.url;
 };
 
-// Instantiate objects
-new Product('imagebag', 'bag.jpg');
-new Product('imagebanna', 'banana.jpg');
-new Product('imagebathroom', 'bathroom.jpg');
-new Product('imageboots', 'boots.jpg');
-new Product('imagebreakfast', 'breakfast.jpg');
+image_displayed1 = busmall_products[0];
+image_displayed2 = busmall_products[1];
+image_displayed3 = busmall_products[2];
 
-new Product('imagebubblegum', 'bubblegum.jpg');
-new Product('imagechair', 'chair.jpg');
-new Product('imagecthulhu', 'cthulhu.jpg');
-new Product('imagedogduck', 'dog-duck.jpg');
-new Product('imagedragon', 'dragon.jpg');
+// Instantiate objects/products
+new Product('bag', 'img/bag.jpg');
+new Product('banana', 'img/banana.jpg');
+new Product('bathroom', 'img/bathroom.jpg');
+new Product('boots', 'img/boots.jpg');
+new Product('breakfast', 'img/breakfast.jpg');
 
-new Product('imagepen', 'pen.jpg');
-new Product('imagepetsweep', 'pet-sweep.jpg');
-new Product('imagescissors', 'scissors.jpg');
-new Product('imageshark', 'shark.jpg');
-new Product('imagesweep', 'sweep.jpg');
+new Product('bubblegum', 'img/bubblegum.jpg');
+new Product('chair', 'img/chair.jpg');
+new Product('cthulhu', 'img/cthulhu.jpg');
+new Product('dogduck', 'img/dog-duck.jpg');
+new Product('dragon', 'img/dragon.jpg');
 
-new Product('imagetuantuan', 'tuantuan.jpg');
-new Product('imageunicorn', 'unicorn.jpg');
-new Product('imageusb', 'usb.jpg');
-new Product('imagewatercan', 'watercan.jpg');
-new Product('imagewineglass', 'wineglass.jpg');
+new Product('pen', 'img/pen.jpg');
+new Product('pet-sweep', 'img/pet-sweep.jpg');
+new Product('scissors', 'img/scissors.jpg');
+new Product('shark', 'img/shark.jpg');
+new Product('sweep', 'img/sweep.png');
 
-// Go back to constructor function. Tell each instantiation to live inside of the product container array after they are constructed. In addition, it will get the render_as_img prototype.
+new Product('tuantuan', 'img/tauntaun.jpg');
+new Product('unicorn', 'img/unicorn.jpg');
+new Product('usb', 'img/usb.gif');
+new Product('water can', 'img/water-can.jpg');
+new Product('wineglass', 'img/wine-glass.jpg');
 
+
+image_displayed1 = busmall_products[0];
+image_displayed2 = busmall_products[1];
+image_displayed3 = busmall_products[2];
+
+function handle_bus_click (event) {
+  // track num of clicks, increment or decrement
+  number_of_clicks --;
+
+  // if(left was clicked), increment left
+  // if(middle was clicked), increment middle
+  // if(right was clicked), increment right
+
+  if(event.target.id === 'image1'){
+    image_displayed1.clicks++;
+  }
+
+  if(event.target === image2){
+    image_displayed2.clicks++;
+
+  }
+
+  if (event.target === image3) {
+    image_displayed3.clicks++;
+
+  }
+
+  console.log('clicked');
+  // click to a max of 25 times
+  // show results
+  // kill the listener
+
+  if (number_of_clicks <= 0) {
+    //show the results
+    // clickcount
+    // click total
+    // rendering a ul ( or a chart );
+    product_container.removeEventListener('click', handle_bus_click);
+  }
+
+  var random1 = Math.floor(Math.random() * busmall_products.length);
+  var random2 = Math.floor(Math.random() * busmall_products.length);
+  var random3 = Math.floor(Math.random() * busmall_products.length);
+
+  busmall_products[random1].render_as_img(image1);
+  busmall_products[random2].render_as_img(image2);
+  busmall_products[random3].render_as_img(image3);
+
+  image_displayed1 = busmall_products[random1];
+  image_displayed2 = busmall_products[random2];
+  image_displayed3 = busmall_products[random3];
+
+
+  // rotate through new images
+}
+
+product_container.addEventListener('click', handle_bus_click);

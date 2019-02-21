@@ -19,9 +19,9 @@ var image3 = document.getElementById('image3');
 var h2_right = document.getElementById('h2_right');
 
 
-var image_displayed1 = null;
-var image_displayed2 = null;
-var image_displayed3 = null;
+var image_left = null;
+var image_middle = null;
+var image_right = null;
 
 
 // Constructor Function
@@ -36,13 +36,10 @@ var Product = function(name, url) {
 };
 
 // Prototype with target location to reach into
-Product.prototype.render_as_img = function(target_img){
+Product.prototype.render_as_img = function(target_img, target_h2){
   target_img.src = this.url;
+  target_h2.textContent = this.name;
 };
-
-image_displayed1 = busmall_products[0];
-image_displayed2 = busmall_products[1];
-image_displayed3 = busmall_products[2];
 
 // Instantiate objects/products
 new Product('bag', 'img/bag.jpg');
@@ -69,60 +66,64 @@ new Product('usb', 'img/usb.gif');
 new Product('water can', 'img/water-can.jpg');
 new Product('wineglass', 'img/wine-glass.jpg');
 
-
-image_displayed1 = busmall_products[0];
-image_displayed2 = busmall_products[1];
-image_displayed3 = busmall_products[2];
+image_left = busmall_products[0];
+image_middle = busmall_products[1];
+image_right = busmall_products[2];
 
 function handle_bus_click (event) {
-  // track num of clicks, increment or decrement
-  number_of_clicks --;
+  if (event.target.tagName === 'IMG'){
+    // track num of clicks, increment or decrement
+    number_of_clicks --;
 
-  // if(left was clicked), increment left
-  // if(middle was clicked), increment middle
-  // if(right was clicked), increment right
+    // if(left was clicked), increment left
+    // if(middle was clicked), increment middle
+    // if(right was clicked), increment right
 
-  if(event.target.id === 'image1'){
-    image_displayed1.clicks++;
-  }
+    if(event.target.id === 'image1'){
+      image_left.clicks++;
+    }
 
-  if(event.target === image2){
-    image_displayed2.clicks++;
+    if(event.target === 'image2'){
+      image_middle.clicks++;
 
-  }
+    }
 
-  if (event.target === image3) {
-    image_displayed3.clicks++;
+    if (event.target === 'image3') {
+      image_right.clicks++;
 
-  }
+    }
 
-  console.log('clicked');
-  // click to a max of 25 times
-  // show results
-  // kill the listener
+    console.log('clicked');
+    // click to a max of 25 times
+    // show results
 
-  if (number_of_clicks <= 0) {
-    //show the results
-    // clickcount
-    // click total
-    // rendering a ul ( or a chart );
-    product_container.removeEventListener('click', handle_bus_click);
-  }
+    if (number_of_clicks <= 0) {
+      // stop the listener
+      product_container.removeEventListener('click', handle_bus_click);
 
-  var random1 = Math.floor(Math.random() * busmall_products.length);
-  var random2 = Math.floor(Math.random() * busmall_products.length);
-  var random3 = Math.floor(Math.random() * busmall_products.length);
+      //show the results
+      
+      // clickcount
+      
+      // click total
 
-  busmall_products[random1].render_as_img(image1);
-  busmall_products[random2].render_as_img(image2);
-  busmall_products[random3].render_as_img(image3);
+      // rendering a ul ( or a chart );
 
-  image_displayed1 = busmall_products[random1];
-  image_displayed2 = busmall_products[random2];
-  image_displayed3 = busmall_products[random3];
+    }
 
+    // rotate through new images
+    var random1 = Math.floor(Math.random() * busmall_products.length);
+    var random2 = Math.floor(Math.random() * busmall_products.length);
+    var random3 = Math.floor(Math.random() * busmall_products.length);
 
-  // rotate through new images
+    busmall_products[random1].render_as_img(image1, h2_left);
+    busmall_products[random2].render_as_img(image2, h2_middle);
+    busmall_products[random3].render_as_img(image3, h2_right);
+
+    image_left = busmall_products[random1];
+    image_middle = busmall_products[random2];
+    image_right = busmall_products[random3];
+  }  
 }
 
 product_container.addEventListener('click', handle_bus_click);
